@@ -1,0 +1,18 @@
+syntax = "proto3";
+option java_package = "com.braze.teams";
+
+package teams;
+
+service teams {
+  rpc GetTeams () returns (GetTeamsResponse);
+}
+
+message GetTeamsResponse {
+  repeated Team teams = 1;
+}
+
+message Team {
+  string id = 1;
+  string name = 2;
+  string color = 3;
+}
