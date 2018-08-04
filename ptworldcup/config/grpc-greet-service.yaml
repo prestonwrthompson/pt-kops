@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: grpc-greet
+  name: grpc-greet
+  namespace: grpc-greet
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: Mapping
+      name: grpc_mapping
+      grpc: true
+      prefix: /helloworld.Greeter/
+      rewrite: /helloworld.Greeter/
+      service: grpc-greet.grpc-greet
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    name: grpc-greet
+    targetPort: grpc-api
+  selector:
+    service: grpc-greet.grpc-greet
