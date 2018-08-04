@@ -11,7 +11,7 @@ metadata:
       kind:  Mapping
       name:  qotm_mapping
       prefix: /qotm/
-      service: qotm
+      service: qotm.qotm
 spec:
   selector:
     app: qotm
