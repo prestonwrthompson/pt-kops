@@ -22,4 +22,4 @@ spec:
     name: grpc-greet
     targetPort: grpc-api
   selector:
-    service: grpc-greet.grpc-greet
+    service: grpc-greet
