@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: teams
+  namespace: teams
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: teams
+    spec:
+      containers:
+      - name: teams
+        image: prestonbraze/teams
+        ports:
+        - name: teams
+          containerPort: 8980
+        env:
+          - name: PORT
+            value: "8980"
+      restartPolicy: Always

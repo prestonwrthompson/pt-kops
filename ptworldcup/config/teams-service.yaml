@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: teams
+  name: teams
+  namespace: teams
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind: Mapping
+      name: grpc_mapping
+      grpc: true
+      prefix: /teams.teams/
+      rewrite: /teams.teams/
+      service: teams.teams
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    name: teams
+    targetPort: teams
+  selector:
+    service: teams
