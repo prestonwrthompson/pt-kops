@@ -14,6 +14,19 @@ public class Application {
   }
 
   public static void main(String[] args) throws IOException, InterruptedException {
-    log.info("Starting teams application");
+    log.info("Starting Teams application");
+    TeamsServer server = new TeamsServer(getPort());
+    server.start();
+    server.blockUntilShutdown();
+    log.info("Teams application startup completed");
+  }
+
+  private static Integer getPort() {
+    String portEnv = System.getenv("PORT");
+    try {
+      return Integer.valueOf(portEnv);
+    } catch (NumberFormatException e) {
+      return 8980;
+    }
   }
 }

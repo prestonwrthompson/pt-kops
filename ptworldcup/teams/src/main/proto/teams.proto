@@ -1,10 +1,13 @@
 syntax = "proto3";
-option java_package = "com.braze.teams";
+option java_package = "com.ptworldcup.teams";
 
 package teams;
 
-service teams {
-  rpc GetTeams () returns (GetTeamsResponse);
+service Teams {
+  rpc GetTeams (GetTeamsRequest) returns (GetTeamsResponse);
+}
+
+message GetTeamsRequest {
 }
 
 message GetTeamsResponse {

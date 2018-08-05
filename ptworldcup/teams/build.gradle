@@ -3,6 +3,8 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'idea'
 
 jar {
     manifest {
@@ -12,14 +14,22 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-mainClassName = 'com.ptworldcup.Application'
+mainClassName = 'com.ptworldcup.teams.Application'
 description = 'teams'
 version = '0.0.1'
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.3'
+    }
 }
 
 dependencies {
@@ -27,4 +37,44 @@ dependencies {
 
     compile 'org.slf4j:slf4j-api:1.7.2'
     compile 'org.slf4j:slf4j-log4j12:1.7.2'
+
+    compile 'io.grpc:grpc-netty:1.12.0'
+    compile 'io.grpc:grpc-protobuf:1.12.0'
+    compile 'io.grpc:grpc-stub:1.12.0'
+}
+
+// The following section auto-generates the Java files for gRPC.
+// Most of this was taken from https://github.com/grpc/grpc-java
+// More info about the protobuf gradle plugin at https://github.com/google/protobuf-gradle-plugin
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.5.1-1"
+    }
+    generatedFilesBaseDir = "$projectDir/src/gen"
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.12.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+// clean is taken from https://github.com/google/protobuf-gradle-plugin#intellij-idea
+clean {
+    delete protobuf.generatedFilesBaseDir
+}
+
+// this is taken from https://github.com/google/protobuf-gradle-plugin#intellij-idea
+idea {
+    module {
+        // proto files and generated Java files are automatically added as
+        // source dirs.
+        // If you have additional sources, add them here:
+        sourceDirs += file("${projectDir}/src/gen/main/java")
+        sourceDirs += file("${projectDir}/src/gen/main/grpc")
+    }
 }

@@ -12,8 +12,8 @@ metadata:
       kind: Mapping
       name: grpc_mapping
       grpc: true
-      prefix: /teams.teams/
-      rewrite: /teams.teams/
+      prefix: /teams.Teams/
+      rewrite: /teams.Teams/
       service: teams.teams
 spec:
   type: ClusterIP
