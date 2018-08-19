@@ -10,7 +10,7 @@ metadata:
       ---
       apiVersion: ambassador/v0
       kind: Mapping
-      name: grpc_mapping
+      name: teams_mapping
       grpc: true
       prefix: /teams.Teams/
       rewrite: /teams.Teams/

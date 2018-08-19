@@ -78,3 +78,9 @@ idea {
         sourceDirs += file("${projectDir}/src/gen/main/grpc")
     }
 }
+
+task runClient(type: JavaExec) {
+    description = "runs gRPC client to talk to Teams server"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'com.ptworldcup.teams.TeamsClient'
+}
