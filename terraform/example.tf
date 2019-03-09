@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-b374d5a5"
+  ami           = "${var.ami}"
   instance_type = "t2.micro"
   key_name      = "${aws_key_pair.terraform_getting_started.key_name}"
 
